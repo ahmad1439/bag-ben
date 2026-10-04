@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAG BEN — Admin Dashboard</title>
+<style>
+:root{--bg:#f5f1ea;--card:#fff;--text:#211e1a;--muted:#766f66;--line:#ded7cc;--accent:#9b5c43}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}.wrap{width:min(1180px,92%);margin:auto}
+header{background:var(--text);color:#fff;padding:18px 0}.head{display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{font-size:20px;font-weight:900}.brand span{display:inline-grid;place-items:center;background:var(--accent);width:35px;height:35px;border-radius:9px;margin-right:8px}
+main{padding:35px 0}.login,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 10px 30px #00000008}.login{max-width:470px;margin:60px auto}.login h1{margin-top:0}.field{display:grid;gap:7px;margin:12px 0}.field label{font-size:12px;font-weight:800}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;font:inherit}.field textarea{min-height:100px;resize:vertical}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:900;cursor:pointer;background:var(--accent);color:#fff}.btn.danger{background:#9a3e3e}.btn.secondary{background:var(--text)}.grid{display:grid;grid-template-columns:1fr 1.5fr;gap:20px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}.stat{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:18px}.stat b{font-size:25px;display:block}.stat span{font-size:11px;color:var(--muted)}.product,.order{display:flex;gap:15px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}.product:last-child,.order:last-child{border-bottom:0}.product img{width:75px;height:75px;object-fit:cover;border-radius:10px;background:#eee}.product-info{flex:1}.product-info strong,.order strong{display:block;font-size:14px}.muted{color:var(--muted);font-size:12px;line-height:1.5}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.hidden{display:none!important}.notice{padding:10px 12px;border-radius:10px;background:#f2eadf;color:#604b3d;font-size:12px;margin:10px 0}.status{border:1px solid var(--line);padding:8px;border-radius:9px;background:#fff}.top-actions{display:flex;gap:8px}.tabs{display:flex;gap:8px;margin-bottom:20px}.tab{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:9px 13px;font-weight:800;cursor:pointer}.tab.active{background:var(--text);color:#fff}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}
+.modal-backdrop.open{display:flex}.modal{width:min(620px,100%);max-height:90vh;overflow:auto;background:var(--card);border-radius:18px;padding:24px;box-shadow:0 25px 80px #0005}
+.modal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.close{border:0;background:transparent;font-size:28px;cursor:pointer;color:var(--text)}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.product,.order{align-items:flex-start}.product .btn{margin-left:auto}}@media(max-width:500px){.stats{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="wrap head"><div class="brand"><span>BB</span>BAG BEN ADMIN</div><div class="top-actions"><a class="btn secondary" href="index.html">Open Store</a><button class="btn" id="logout">Logout</button></div></div></header>
+<main class="wrap">
+<section class="login" id="loginPanel">
+<h1>Admin Login</h1><p class="muted">Use your private admin key to manage products, settings and orders.</p>
+<div class="field"><label>Admin key</label><input id="adminKey" type="password" placeholder="Enter admin key"></div>
+<button class="btn" id="loginBtn">Enter Dashboard</button><div id="loginMsg" class="notice hidden"></div>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="stats"><div class="stat"><b id="productCount">0</b><span>Products</span></div><div class="stat"><b id="orderCount">0</b><span>Orders</span></div><div class="stat"><b id="newCount">0</b><span>New orders</span></div></div>
+<div class="tabs"><button class="tab active" data-tab="products">Products</button><button class="tab" data-tab="orders">Orders</button><button class="tab" data-tab="settings">Store settings</button></div>
+
+<div id="productsTab" class="grid">
+<div class="panel">
+<h2>Add a product</h2>
+<p class="muted">Upload a bag image, then enter its details. It will appear in the store.</p>
+<form id="productForm">
+<div class="field"><label>Bag name *</label><input name="name" required placeholder="e.g. Elegant Shoulder Bag"></div>
+<div class="field"><label>Price *</label><input name="price" required type="number" min="0" placeholder="1200"></div>
+<div class="field"><label>Category</label><input name="category" placeholder="Shoulder"></div>
+<div class="field"><label>Rating</label><input name="rating" type="number" min="1" max="5" step=".1" value="5"></div><div class="field"><label>Stock quantity</label><input name="stock" type="number" min="0" step="1" value="10"></div>
+<div class="field"><label>Description *</label><textarea name="description" required placeholder="Write a clear product description..."></textarea></div>
+<div class="field"><label>Product image</label><input name="image" type="file" accept="image/png,image/jpeg,image/webp"></div>
+<button class="btn">Add product</button>
+</form><div id="productMsg" class="notice hidden"></div>
+</div>
+<div class="panel"><h2>Current products</h2><div id="productList"></div></div>
+</div>
+
+<div id="ordersTab" class="panel hidden"><h2>Customer orders</h2><div id="orderList"></div></div>
+
+<div id="settingsTab" class="panel hidden">
+<h2>Store settings</h2>
+<form id="settingsForm">
+<div class="field"><label>Store name</label><input name="storeName" id="storeName"></div>
+<div class="field"><label>Delivery phone</label><input name="deliveryPhone" id="deliveryPhone"></div>
+<div class="field"><label>Currency label</label><input name="currency" id="currency"></div>
+<button class="btn">Save settings</button>
+</form><div id="settingsMsg" class="notice hidden"></div>
+</div>
+</section>
+</main>
+<script>
+let key=sessionStorage.getItem("bb_admin_key")||"";
+const $=s=>document.querySelector(s);
+function api(path,opts={}){opts.headers=opts.headers||{};opts.headers["x-admin-key"]=key;return fetch(path,opts)}
+function msg(el,text){el.textContent=text;el.classList.remove("hidden");setTimeout(()=>el.classList.add("hidden"),3000)}
+function showDashboard(){ $("#loginPanel").classList.add("hidden");$("#dashboard").classList.remove("hidden");loadAll(); }
+async function login(){key=$("#adminKey").value.trim();if(!key)return msg($("#loginMsg"),"Enter your admin key.");let r=await fetch("/api/store");if(!r.ok)return msg($("#loginMsg"),"Server is not responding.");let check=await fetch("/api/orders",{headers:{"x-admin-key":key}});if(!check.ok){key="";return msg($("#loginMsg"),"Invalid admin key.");}sessionStorage.setItem("bb_admin_key",key);showDashboard()}
+$("#loginBtn").onclick=login;$("#adminKey").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+$("#logout").onclick=()=>{sessionStorage.removeItem("bb_admin_key");location.reload()};
+document.querySelectorAll(".tab").forEach(btn=>btn.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));btn.classList.add("active");["products","orders","settings"].forEach(x=>$("#"+x+"Tab").classList.toggle("hidden",x!==btn.dataset.tab))});
+async function loadAll(){
+  let store=await (await fetch("/api/store")).json();
+  productCache=store.products||[];
+  $("#productCount").textContent=productCache.length;
+  $("#orderCount").textContent=(store.orders||[]).length;
+  $("#newCount").textContent=(store.orders||[]).filter(o=>o.status==="New").length;
+  renderProducts(productCache);
+  renderOrders(store.orders||[]);
+  $("#storeName").value=store.settings.storeName;
+  $("#deliveryPhone").value=store.settings.deliveryPhone;
+  $("#currency").value=store.settings.currency;
+}
+function renderProducts(list){$("#productList").innerHTML=list.length?list.map(p=>`<div class="product"><img src="${p.image||""}" alt=""><div class="product-info"><strong>${esc(p.name)}</strong><div class="muted">${esc(p.category)} · Rs. ${Number(p.price).toLocaleString()} · ⭐ ${p.rating} · 📦 Stock: ${Number(p.stock ?? 0)}</div><div class="muted">${esc(p.description)}</div></div><div class="row"><button class="btn secondary" onclick="editProduct('${p.id}')">Edit</button><button class="btn danger" onclick="removeProduct('${p.id}')">Remove</button></div></div>`).join(""):'<p class="muted">No products yet. Add your first product.</p>'}
+function renderOrders(list){$("#orderList").innerHTML=list.length?list.map(o=>`<div class="order"><div style="flex:1"><strong>${esc(o.id)} · ${esc(o.customerName)}</strong><div class="muted">📞 ${esc(o.phone)} · ${esc(o.address)}</div><div class="muted">${o.items.map(i=>esc(i.name)+" × "+i.qty).join(", ")} · Total Rs. ${Number(o.total).toLocaleString()}</div></div><select class="status" onchange="updateOrder('${o.id}',this.value)">${["New","Processing","Shipped","Completed","Cancelled"].map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select></div>`).join(""):'<p class="muted">No customer orders yet.</p>'}
+async function removeProduct(id){if(!confirm("Remove this product from BAG BEN?"))return;let r=await api("/api/products/"+id,{method:"DELETE"});if(!r.ok)return alert((await r.json()).error);loadAll()}
+async function updateOrder(id,status){let r=await api("/api/orders/"+id,{method:"PUT",headers:{"Content-Type":"application/json","x-admin-key":key},body:JSON.stringify({status})});if(!r.ok)alert((await r.json()).error);loadAll()}
+$("#productForm").onsubmit=async e=>{e.preventDefault();let fd=new FormData(e.target);let r=await api("/api/products",{method:"POST",body:fd});let data=await r.json();if(!r.ok)return msg($("#productMsg"),data.error||"Could not add product.");e.target.reset();msg($("#productMsg"),"Product added successfully.");loadAll()}
+$("#settingsForm").onsubmit=async e=>{e.preventDefault();let body=Object.fromEntries(new FormData(e.target));let r=await api("/api/settings",{method:"PUT",headers:{"Content-Type":"application/json","x-admin-key":key},body:JSON.stringify(body)});let data=await r.json();if(!r.ok)return msg($("#settingsMsg"),data.error||"Could not save settings.");msg($("#settingsMsg"),"Settings saved.");loadAll()}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+let productCache = [];
+
+async function refreshStore(){
+  const r = await fetch("/api/store");
+  const store = await r.json();
+  productCache = store.products || [];
+  $("#productCount").textContent = productCache.length;
+  $("#orderCount").textContent = (store.orders || []).length;
+  $("#newCount").textContent = (store.orders || []).filter(o => o.status === "New").length;
+  renderProducts(productCache);
+  renderOrders(store.orders || []);
+  $("#storeName").value = store.settings.storeName;
+  $("#deliveryPhone").value = store.settings.deliveryPhone;
+  $("#currency").value = store.settings.currency;
+}
+
+function editProduct(id){
+  const p = productCache.find(x => x.id === id);
+  if(!p) return;
+  $("#editId").value = p.id;
+  $("#editName").value = p.name;
+  $("#editPrice").value = p.price;
+  $("#editCategory").value = p.category || "";
+  $("#editRating").value = p.rating || 5;
+  $("#editStock").value = Number(p.stock ?? 0);
+  $("#editDescription").value = p.description || "";
+  $("#editForm").querySelector('input[type="file"]').value = "";
+  $("#editModal").classList.add("open");
+}
+
+function closeEdit(){
+  $("#editModal").classList.remove("open");
+}
+
+$("#closeEdit").onclick = closeEdit;
+$("#cancelEdit").onclick = closeEdit;
+$("#editModal").addEventListener("click", e => {
+  if(e.target.id === "editModal") closeEdit();
+});
+
+$("#editForm").onsubmit = async e => {
+  e.preventDefault();
+  const id = $("#editId").value;
+  const fd = new FormData(e.target);
+  fd.delete("id");
+  const r = await api("/api/products/" + encodeURIComponent(id), {method:"PUT", body:fd});
+  const data = await r.json();
+  if(!r.ok) return msg($("#editMsg"), data.error || "Could not update product.");
+  closeEdit();
+  loadAll();
+};
+
+if(key)showDashboard();
+</script>
+
+<div class="modal-backdrop" id="editModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Edit product</h2>
+      <button class="close" id="closeEdit" aria-label="Close">×</button>
+    </div>
+    <form id="editForm">
+      <input type="hidden" name="id" id="editId">
+      <div class="field"><label>Bag name *</label><input name="name" id="editName" required></div>
+      <div class="field"><label>Price *</label><input name="price" id="editPrice" required type="number" min="0"></div>
+      <div class="field"><label>Category</label><input name="category" id="editCategory"></div>
+      <div class="field"><label>Rating</label><input name="rating" id="editRating" type="number" min="1" max="5" step=".1"></div><div class="field"><label>Stock quantity</label><input name="stock" id="editStock" type="number" min="0" step="1"></div>
+      <div class="field"><label>Description *</label><textarea name="description" id="editDescription" required></textarea></div>
+      <div class="field"><label>Replace image (optional)</label><input name="image" type="file" accept="image/png,image/jpeg,image/webp"></div>
+      <div class="row"><button class="btn" type="submit">Save changes</button><button class="btn secondary" type="button" id="cancelEdit">Cancel</button></div>
+    </form>
+    <div id="editMsg" class="notice hidden"></div>
+  </div>
+</div>
+
+</body>
+</html>

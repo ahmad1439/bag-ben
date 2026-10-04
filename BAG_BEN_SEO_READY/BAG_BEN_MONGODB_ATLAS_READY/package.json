@@ -1,0 +1,16 @@
+{
+  "name": "bag-ben-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BAG BEN frontend with MongoDB Atlas backend and admin dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.1.0",
+    "mongodb": "^7.5.0",
+    "multer": "^2.0.2"
+  }
+}

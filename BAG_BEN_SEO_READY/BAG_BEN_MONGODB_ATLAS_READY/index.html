@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="BAG BEN — modern bags, simple shopping and delivery contact.">
+<meta name="google-site-verification" content="rv2uy2fAxg2fMHrBXzXqE7Cvi2JIScjB6DD08ib1zYg" />
+<title>BAG BEN — Modern Bag Store</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div class="topbar">✨ New collection is here · Delivery & orders: <a href="tel:03217342487">03217342487</a></div>
+
+<header class="header">
+  <div class="wrap nav">
+    <a class="logo" href="#home" aria-label="BAG BEN home">
+  <span class="brand-mark" aria-hidden="true">
+    <svg viewBox="0 0 64 64" role="img">
+      <path d="M18 24h28l4 31H14l4-31Z"></path>
+      <path d="M24 25v-5c0-6 3.5-10 8-10s8 4 8 10v5"></path>
+      <path d="M24 35h16"></path>
+    </svg>
+  </span>
+  <span class="brand-name">BAG <b>BEN</b></span>
+</a>
+    <nav class="desktop-nav">
+      <a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">Why BAG BEN</a><a href="#contact">Contact</a>
+    </nav>
+    <div class="actions">
+      <button class="round" id="themeBtn" title="Change color theme">◐</button>
+      <button class="round" id="wishBtn" title="Wishlist">♡ <b id="wishCount">0</b></button>
+      <button class="cart" id="cartBtn">Cart <b id="cartCount">0</b></button>
+      <button class="menu" id="menuBtn">☰</button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobileNav"><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">Why us</a><a href="#contact">Contact</a></nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker">BAG BEN · CURATED COLLECTION</p>
+      <h1>Carry your style.<br><em>Own the moment.</em></h1>
+      <p class="lead">Discover beautiful everyday and occasion bags selected to make your look feel polished, practical and special.</p>
+      <div class="hero-buttons"><a class="btn primary" href="#shop">Shop the collection →</a><button class="btn ghost" id="viewFeatured">View featured</button></div>
+      <div class="mini-proof"><span>★ 4.8/5</span><span>•</span><span>Easy ordering</span><span>•</span><span>Delivery support</span></div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-tag">NEW<br>DROP</div>
+      <img id="heroImage" alt="Featured BAG BEN bag">
+      <div class="hero-caption"><strong>BAG BEN</strong><span>Modern bags for every day</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="benefits">
+ <div class="wrap benefit-grid">
+  <div><span>01</span><strong>Easy ordering</strong><small>Open a bag and get details instantly.</small></div>
+  <div><span>02</span><strong>Delivery contact</strong><small><a href="tel:03217342487">03217342487</a></small></div>
+  <div><span>03</span><strong>Customer ratings</strong><small>Rate your favorite products.</small></div>
+  <div><span>04</span><strong>Responsive design</strong><small>Looks great on phone and desktop.</small></div>
+ </div>
+</section>
+
+<section id="shop" class="shop wrap">
+  <div class="section-title"><div><p class="kicker">THE COLLECTION</p><h2>Find your next favorite bag</h2></div><p class="section-note">Click any product to see its description first, then delivery contact.</p></div>
+  <div class="toolbar">
+    <div class="search"><span>⌕</span><input id="search" type="search" placeholder="Search bags by name, style or price..." aria-label="Search bags"></div>
+    <select id="priceFilter" aria-label="Choose price range">
+      <option value="all">All prices</option>
+      <option value="low">Low price bags</option>
+      <option value="mid">Mid price bags</option>
+      <option value="high">High price bags</option>
+    </select>
+    <select id="sort" aria-label="Sort bags">
+      <option value="featured">Featured</option>
+      <option value="low">Lowest price first</option>
+      <option value="high">Highest price first</option>
+      <option value="rating">Top rated</option>
+    </select>
+  </div>
+  <div class="price-shortcuts" aria-label="Quick price sorting">
+    <span>Quick price:</span>
+    <button class="price-chip" data-price-sort="low">↗ Low → High</button>
+    <button class="price-chip" data-price-sort="high">↘ High → Low</button>
+    <button class="price-chip" data-price-sort="all">All bags</button>
+  </div>
+  <div id="categoryBar" class="categories"></div>
+  <div id="products" class="product-grid"></div>
+</section>
+
+<section id="about" class="story">
+ <div class="wrap story-grid">
+   <div><p class="kicker">WHY BAG BEN</p><h2>A cleaner way to shop for bags.</h2></div>
+   <div class="story-text"><p>We keep the experience simple: beautiful product photos, clear descriptions, ratings, wishlist and an easy delivery contact.</p><p>Everything is designed to be quick and comfortable on mobile as well as desktop.</p></div>
+ </div>
+</section>
+
+<section class="contact-card wrap" id="contact">
+ <div><p class="kicker">READY TO ORDER?</p><h2>Have a question about a bag?</h2><p>Open the product and use the delivery contact shown there, or call directly.</p></div>
+ <a class="btn primary" href="tel:03217342487">Call 03217342487</a>
+</section>
+</main>
+
+<footer class="footer">
+ <div class="wrap footer-grid">
+  <div><a class="logo footer-logo" href="#home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M18 24h28l4 31H14l4-31Z"></path><path d="M24 25v-5c0-6 3.5-10 8-10s8 4 8 10v5"></path><path d="M24 35h16"></path></svg></span><span class="brand-name">BAG <b>BEN</b></span></a><p>Modern bags. Simple shopping. Easy delivery.</p></div>
+  <div><strong>Shop</strong><a href="#shop">All bags</a><a href="#shop">New collection</a></div>
+  <div><strong>Help</strong><a href="#contact">Delivery contact</a><a href="#about">About BAG BEN</a></div>
+  <div><strong>Order</strong><a href="tel:03217342487">03217342487</a><span>Available for delivery queries</span></div>
+ </div>
+ <div class="wrap copyright">© 2026 BAG BEN · All rights reserved.</div>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer"><div class="drawer-head"><h3 id="drawerTitle">Your Cart</h3><button id="closeDrawer">×</button></div><div id="drawerBody"></div></aside>
+
+<div class="modal" id="productModal">
+ <div class="modal-box">
+  <button class="modal-close" id="closeModal">×</button>
+  <div class="modal-grid">
+   <div class="modal-image"><img id="modalImg" alt=""></div>
+   <div class="modal-info">
+    <p class="kicker">PRODUCT DETAILS</p>
+    <h2 id="modalName"></h2>
+    <div class="modal-rating" id="modalRating"></div>
+    <div class="price" id="modalPrice"></div><div id="modalStock" class="modal-stock"></div>
+    <div class="detail-block"><strong>01 — Description</strong><p id="modalDesc"></p></div>
+    <div class="detail-block delivery"><strong>02 — Delivery contact</strong><p>For delivery/order information, contact us directly:</p><a href="tel:03217342487">📞 03217342487</a></div>
+    <div class="rating-box"><strong>Your rating</strong><div id="ratingStars"></div></div>
+    <div class="modal-actions"><button class="btn primary" id="addCart">Add to cart</button> <button class="btn secondary" id="closeModalBottom" type="button">Close</button><button class="btn ghost" id="addWish">♡ Wishlist</button></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+
+<!-- BAG BEN Assistant -->
+<button class="chat-launcher" id="chatLauncher" aria-label="Open BAG BEN Assistant">
+  <span class="chat-icon">✦</span><span class="chat-label">BAG BEN Assistant</span>
+</button>
+
+<section class="chatbot" id="chatbot" aria-label="BAG BEN Assistant">
+  <div class="chat-head">
+    <div>
+      <strong>BAG BEN Assistant</strong>
+      <small><span class="online-dot"></span> Online · Store help</small>
+    </div>
+    <button id="chatClose" aria-label="Close assistant">×</button>
+  </div>
+  <div class="chat-messages" id="chatMessages">
+    <div class="bot-msg">Hi! 👋 I’m the BAG BEN Assistant. Ask me about bags, prices, ratings, delivery, cart, or ordering.</div>
+    <div class="quick-replies" id="quickReplies">
+      <button data-question="What is the delivery number?">Delivery contact</button>
+      <button data-question="How do I order a bag?">How to order</button>
+      <button data-question="Show me the bags">Show bags</button>
+      <button data-question="What can you help me with?">Help</button>
+    </div>
+  </div>
+  <form class="chat-form" id="chatForm">
+    <input id="chatInput" autocomplete="off" placeholder="Ask BAG BEN..." aria-label="Message">
+    <button type="submit" aria-label="Send message">➤</button>
+  </form>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
